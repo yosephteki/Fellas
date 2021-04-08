@@ -1,7 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"Fellas/Routes"
+	"fmt"
+)
 
 func main() {
 	fmt.Println("HELLO WORLD!")
+
+	r := Routes.SetupRouter()
+	r.Run()
 }
