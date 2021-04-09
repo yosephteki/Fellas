@@ -7,22 +7,22 @@ import (
 )
 
 // Get All User
-func GetUsers(c *gin.Context) {
-	c.JSON(http.StatusOK, "SUCCESS!")
+func GetUser(c *gin.Context) {
+	c.JSON(http.StatusOK, "SUCCESS! GetUser ")
 }
 
-func GetUser(c *gin.Context) {
-	c.JSON(http.StatusOK, "SUCCESS!")
+func GetUsers(c *gin.Context) {
+	c.JSON(http.StatusOK, "SUCCESS! GetUsers")
 }
 
 func CreateUser(c *gin.Context) {
-	c.JSON(http.StatusOK, "SUCCESS!")
+	c.JSON(http.StatusOK, "SUCCESS! CreateUser")
 }
 
 func UpdateUser(c *gin.Context) {
-	c.JSON(http.StatusOK, "SUCCESS!")
+	c.JSON(http.StatusOK, "SUCCESS! UpdateUser")
 }
 
 func DeleteUser(c *gin.Context) {
-	c.JSON(http.StatusOK, "SUCCESS!")
+	c.JSON(http.StatusOK, "SUCCESS! DeleteUser")
 }
