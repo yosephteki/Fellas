@@ -33,7 +33,15 @@ func GetUsers(c *gin.Context) {
 }
 
 func CreateUser(c *gin.Context) {
-	c.JSON(http.StatusOK, "SUCCESS! CreateUser")
+	var user Models.User
+	c.BindJSON(&user)
+	err := Models.CreateUser(&user)
+	if err != nil {
+		fmt.Println(err.Error())
+		c.AbortWithStatus(http.StatusNotFound)
+	} else {
+		c.JSON(http.StatusOK, user)
+	}
 }
 
 func UpdateUser(c *gin.Context) {

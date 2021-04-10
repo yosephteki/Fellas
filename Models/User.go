@@ -26,3 +26,10 @@ func GetUserById(user *User, id string) (err error) {
 	}
 	return nil
 }
+
+func CreateUser(user *User) (err error) {
+	if err = Config.DB.Create(user).Error; err != nil {
+		return err
+	}
+	return nil
+}
