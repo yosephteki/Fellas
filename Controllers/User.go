@@ -11,7 +11,6 @@ import (
 // Get All User
 func GetUserById(c *gin.Context) {
 	id := c.Params.ByName("id")
-	fmt.Println(id + "<---------------")
 	var user Models.User
 	err := Models.GetUserById(&user, id)
 	fmt.Println(user)
