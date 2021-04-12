@@ -44,9 +44,28 @@ func CreateUser(c *gin.Context) {
 }
 
 func UpdateUser(c *gin.Context) {
-	c.JSON(http.StatusOK, "SUCCESS! UpdateUser")
+	var user Models.User
+	id := c.Params.ByName("id")
+	err := Models.GetUserById(&user, id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, user)
+	}
+	c.BindJSON(&user)
+	err = Models.UpdateUser(&user, id)
+	if err != nil {
+		c.AbortWithStatus(http.StatusNotFound)
+	} else {
+		c.JSON(http.StatusOK, user)
+	}
 }
 
 func DeleteUser(c *gin.Context) {
-	c.JSON(http.StatusOK, "SUCCESS! DeleteUser")
+	var user Models.User
+	id := c.Params.ByName("id")
+	err := Models.DeleteUser(&user, id)
+	if err != nil {
+		c.AbortWithStatus(http.StatusNotFound)
+	} else {
+		c.JSON(http.StatusOK, gin.H{"id" + id: "is deleted"})
+	}
 }

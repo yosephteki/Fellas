@@ -34,3 +34,13 @@ func CreateUser(user *User) (err error) {
 	}
 	return nil
 }
+
+func UpdateUser(user *User, id string) (err error) {
+	Config.DB.Save(user)
+	return nil
+}
+
+func DeleteUser(user *User, id string) (err error) {
+	Config.DB.Where("id=?", id).Delete(user)
+	return nil
+}
