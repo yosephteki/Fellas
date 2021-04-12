@@ -17,5 +17,10 @@ func SetupRouter() *gin.Engine {
 		grp1.PUT("user/:id", Controllers.UpdateUser)
 		grp1.DELETE("user/:id", Controllers.DeleteUser)
 	}
+	grp2 := r.Group("/idea-api")
+	{
+		grp2.GET("ideas", Controllers.GetIdeas)
+		grp2.GET("userIdea/:userId", Controllers.GetIdeaByUserId)
+	}
 	return r
 }
