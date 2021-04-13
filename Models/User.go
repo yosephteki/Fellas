@@ -1,6 +1,9 @@
 package Models
 
-import "Fellas/Config"
+import (
+	"Fellas/Config"
+	"fmt"
+)
 
 type User struct {
 	Id      uint   `json:"id"`
@@ -43,4 +46,21 @@ func UpdateUser(user *User, id string) (err error) {
 func DeleteUser(user *User, id string) (err error) {
 	Config.DB.Where("id=?", id).Delete(user)
 	return nil
+}
+
+func GetUserIdeas(id string) (ud UserIdea, err error) {
+	var user User
+	var ideas Idea
+	var userIdea UserIdea
+	if err = Config.DB.Where("id=?", id).First(&user).Error; err != nil {
+		return ud, err
+	}
+	if err = Config.DB.Where("founder=?", user.Id).Find(&ideas).Error; err != nil {
+		return ud, err
+	}
+	fmt.Println(user)
+	userIdea.User = user
+	userIdea.Ideas = ideas
+	return userIdea, nil
+
 }

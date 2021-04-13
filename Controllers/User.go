@@ -69,3 +69,14 @@ func DeleteUser(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"id" + id: "is deleted"})
 	}
 }
+
+func GetUserIdea(c *gin.Context) {
+	userId := c.Params.ByName("userId")
+	userIdeas, err := Models.GetUserIdeas(userId)
+	if err != nil {
+		c.AbortWithStatus(http.StatusNotFound)
+	} else {
+		fmt.Println(userIdeas)
+		c.JSON(http.StatusOK, userIdeas)
+	}
+}
