@@ -58,9 +58,26 @@ func GetUserIdeas(id string) (ud UserIdea, err error) {
 	if err = Config.DB.Where("founder=?", user.Id).Find(&ideas).Error; err != nil {
 		return ud, err
 	}
-	fmt.Println(user)
 	userIdea.User = user
 	userIdea.Ideas = ideas
 	return userIdea, nil
 
+}
+
+func GetUserIdeaJoin(id string) (ud []UserIdeaJoin, err error) {
+	var userIdeaJoins []UserIdeaJoin
+	rows, err := Config.DB.Table("user").
+		Select("COALESCE(user.id,0) as UserId,COALESCE(user.name,'') as name,COALESCE(user.email,'') as email,COALESCE(user.phone,'') as phone,COALESCE(user.address,'') as Address,COALESCE(idea.id,0) as IdeaId,COALESCE(idea.name,'') as ideaName,COALESCE(idea.description,'') as ideaDescription,COALESCE(idea.founder,'') as founder").
+		Joins("left join idea on idea.founder = user.id").Rows()
+	for rows.Next() {
+		var userIdeaJoin UserIdeaJoin
+		err := rows.Scan(&userIdeaJoin.UserId, &userIdeaJoin.Name, &userIdeaJoin.Email, &userIdeaJoin.Phone, &userIdeaJoin.Address,
+			&userIdeaJoin.IdeaId, &userIdeaJoin.IdeaName, &userIdeaJoin.IdeaDescription, &userIdeaJoin.Founder)
+		if err != nil {
+			fmt.Println(err)
+			return ud, err
+		}
+		userIdeaJoins = append(userIdeaJoins, userIdeaJoin)
+	}
+	return userIdeaJoins, nil
 }

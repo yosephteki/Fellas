@@ -13,7 +13,6 @@ func GetUserById(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var user Models.User
 	err := Models.GetUserById(&user, id)
-	fmt.Println(user)
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
@@ -76,7 +75,17 @@ func GetUserIdea(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
-		fmt.Println(userIdeas)
 		c.JSON(http.StatusOK, userIdeas)
 	}
+}
+
+func GetUserIdeaJoin(c *gin.Context) {
+	userId := c.Params.ByName("userId")
+	userIdeaJoins, err := Models.GetUserIdeaJoin(userId)
+	if err != nil {
+		c.AbortWithStatus(http.StatusNotFound)
+	} else {
+		c.JSON(http.StatusOK, userIdeaJoins)
+	}
+
 }

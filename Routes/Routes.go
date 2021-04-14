@@ -22,6 +22,7 @@ func SetupRouter() *gin.Engine {
 		grp2.GET("ideas", Controllers.GetIdeas)
 		grp2.GET("userIdea/:userId", Controllers.GetIdeaByUserId)
 		grp2.GET("ideasUser/:userId", Controllers.GetUserIdea)
+		grp2.GET("ideaUserJoin/:userId", Controllers.GetUserIdeaJoin)
 	}
 	return r
 }
