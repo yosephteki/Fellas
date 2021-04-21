@@ -6,15 +6,26 @@ import (
 )
 
 type User struct {
-	Id      uint   `json:"id"`
-	Name    string `json:"name"`
-	Email   string `json:"email"`
-	Phone   string `json:"phone"`
-	Address string `json:"address"`
+	Id       uint   `json:"id"`
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Phone    string `json:"phone"`
+	Address  string `json:"address"`
+	Password string `json:"password"`
 }
 
 func (u *User) TableName() string {
 	return "user"
+}
+
+func Login(user *User, email string, password string) (err error) {
+	if err = Config.DB.Where("email=?", email).First(user).Error; err != nil {
+		return err
+	}
+	if user.Password != password {
+		return err
+	}
+	return nil
 }
 
 func GetAllUsers(user *[]User) (err error) {

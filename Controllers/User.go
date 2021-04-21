@@ -2,13 +2,33 @@ package Controllers
 
 import (
 	"Fellas/Models"
+	"encoding/json"
 	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-// Get All User
+func Login(c *gin.Context) {
+	var user Models.User
+	var userLogin Models.User
+	var unmarshalErr *json.UnmarshalTypeError
+
+	decoder := json.NewDecoder(c.Request.Body)
+	decoder.DisallowUnknownFields()
+	err := decoder.Decode(&userLogin)
+	if err != nil {
+		fmt.Println("ERR MARSHAL", unmarshalErr)
+	}
+	err = Models.Login(&user, userLogin.Email, userLogin.Password)
+	if err != nil {
+		c.AbortWithStatus(http.StatusNotFound)
+	} else {
+		c.JSON(http.StatusOK, user)
+	}
+
+}
+
 func GetUserById(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var user Models.User
