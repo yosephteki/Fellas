@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,7 +25,12 @@ func Login(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
-		c.JSON(http.StatusOK, user)
+		sign := jwt.New(jwt.GetSigningMethod("HS256"))
+		token, err := sign.SignedString([]byte("secret"))
+		if err != nil {
+			c.AbortWithStatus(http.StatusNotFound)
+		}
+		c.JSON(http.StatusOK, token)
 	}
 
 }

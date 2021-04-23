@@ -25,6 +25,7 @@ func Login(user *User, email string, password string) (err error) {
 	if user.Password != password {
 		return err
 	}
+
 	return nil
 }
 
