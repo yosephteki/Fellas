@@ -23,7 +23,7 @@ func Login(c *gin.Context) {
 	}
 	err = Models.Login(&user, userLogin.Email, userLogin.Password)
 	if err != nil {
-		c.AbortWithStatus(http.StatusNotFound)
+		c.JSON(http.StatusInternalServerError, err.Error())
 	} else {
 		sign := jwt.New(jwt.GetSigningMethod("HS256"))
 		token, err := sign.SignedString([]byte("secret"))

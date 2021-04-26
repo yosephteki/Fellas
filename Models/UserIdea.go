@@ -1,8 +1,8 @@
 package Models
 
 type UserIdea struct {
-	User  User `json:"user"`
-	Ideas Idea `json:"ideas"`
+	User  User   `json:"user"`
+	Ideas []Idea `json:"ideas"`
 }
 
 type UserIdeaJoin struct {

@@ -2,6 +2,7 @@ package Models
 
 import (
 	"Fellas/Config"
+	"errors"
 	"fmt"
 )
 
@@ -23,9 +24,8 @@ func Login(user *User, email string, password string) (err error) {
 		return err
 	}
 	if user.Password != password {
-		return err
+		return errors.New("Wrong Password")
 	}
-
 	return nil
 }
 
@@ -62,7 +62,7 @@ func DeleteUser(user *User, id string) (err error) {
 
 func GetUserIdeas(id string) (ud UserIdea, err error) {
 	var user User
-	var ideas Idea
+	var ideas []Idea
 	var userIdea UserIdea
 	if err = Config.DB.Where("id=?", id).First(&user).Error; err != nil {
 		return ud, err
