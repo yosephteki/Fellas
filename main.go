@@ -5,15 +5,15 @@ import (
 	"Fellas/Routes"
 	"fmt"
 
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 func main() {
 	var err error
 	fmt.Println("HELLO WORLD!")
 
-	Config.DB, err = gorm.Open("mysql", Config.DBURL(Config.BuildConfig()))
+	Config.DB, err = gorm.Open("postgres", "host=localhost port=5432 user=postgres dbname=postgres sslmode=disable password=admin")
 	if err != nil {
 		fmt.Println("Status : ", err)
 	}
