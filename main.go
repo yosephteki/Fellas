@@ -2,6 +2,7 @@ package main
 
 import (
 	"Fellas/Config"
+	"Fellas/Models"
 	"Fellas/Routes"
 	"fmt"
 
@@ -17,6 +18,9 @@ func main() {
 	if err != nil {
 		fmt.Println("Status : ", err)
 	}
+	Config.DB.AutoMigrate(&Models.Idea{})
+	Config.DB.AutoMigrate(&Models.User{})
+
 	defer Config.DB.Close()
 	r := Routes.SetupRouter()
 	r.Run()
