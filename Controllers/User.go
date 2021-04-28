@@ -73,12 +73,12 @@ func UpdateUser(c *gin.Context) {
 	id := c.Params.ByName("id")
 	err := Models.GetUserById(&user, id)
 	if err != nil {
-		c.JSON(http.StatusNotFound, user)
+		c.JSON(http.StatusInternalServerError, "User not found")
 	}
-	c.BindJSON(&user)
+	// c.BindJSON(&user)
 	err = Models.UpdateUser(&user, id)
 	if err != nil {
-		c.AbortWithStatus(http.StatusNotFound)
+		c.JSON(http.StatusInternalServerError, "Fail to update user")
 	} else {
 		c.JSON(http.StatusOK, user)
 	}
