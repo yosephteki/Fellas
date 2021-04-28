@@ -7,12 +7,12 @@ import (
 )
 
 type User struct {
-	Id       []uint8 `json:"id"`
-	Name     string  `json:"name"`
-	Email    string  `json:"email"`
-	Phone    string  `json:"phone"`
-	Address  string  `json:"address"`
-	Password string  `json:"password"`
+	Id       string `json:"id"`
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Phone    string `json:"phone"`
+	Address  string `json:"address"`
+	Password string `json:"password"`
 }
 
 func (u *User) TableName() string {
@@ -51,6 +51,7 @@ func CreateUser(user *User) (err error) {
 }
 
 func UpdateUser(user *User, id string) (err error) {
+	fmt.Println(user)
 	Config.DB.Save(user)
 	return nil
 }

@@ -75,7 +75,9 @@ func UpdateUser(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, "User not found")
 	}
-	// c.BindJSON(&user)
+	fmt.Println(&user, "BEFORE")
+	c.BindJSON(&user)
+	fmt.Println(&user, "AFTER")
 	err = Models.UpdateUser(&user, id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, "Fail to update user")
