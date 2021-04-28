@@ -89,7 +89,7 @@ func DeleteUser(c *gin.Context) {
 	id := c.Params.ByName("id")
 	err := Models.DeleteUser(&user, id)
 	if err != nil {
-		c.AbortWithStatus(http.StatusNotFound)
+		c.JSON(http.StatusInternalServerError, "Fail to update user")
 	} else {
 		c.JSON(http.StatusOK, gin.H{"id" + id: "is deleted"})
 	}
