@@ -51,13 +51,16 @@ func CreateUser(user *User) (err error) {
 }
 
 func UpdateUser(user *User, id string) (err error) {
-	fmt.Println(user)
-	Config.DB.Save(user)
+	if err = Config.DB.Save(user).Error; err != nil {
+		return err
+	}
 	return nil
 }
 
 func DeleteUser(user *User, id string) (err error) {
-	Config.DB.Where("id=?", id).Delete(user)
+	if err = Config.DB.Where("id=?", id).Delete(user).Error; err != nil {
+		return err
+	}
 	return nil
 }
 

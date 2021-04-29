@@ -50,7 +50,7 @@ func GetUsers(c *gin.Context) {
 	var users []Models.User
 	err := Models.GetAllUsers(&users)
 	if err != nil {
-		c.AbortWithStatus(http.StatusNotFound)
+		c.JSON(http.StatusInternalServerError, err.Error())
 	} else {
 		c.JSON(http.StatusOK, users)
 	}
@@ -61,10 +61,9 @@ func CreateUser(c *gin.Context) {
 	c.BindJSON(&user)
 	err := Models.CreateUser(&user)
 	if err != nil {
-		fmt.Println(err.Error())
-		c.AbortWithStatus(http.StatusNotFound)
+		c.JSON(http.StatusInternalServerError, err.Error())
 	} else {
-		c.JSON(http.StatusOK, user)
+		c.JSON(http.StatusOK, "User successfully created")
 	}
 }
 
@@ -73,16 +72,14 @@ func UpdateUser(c *gin.Context) {
 	id := c.Params.ByName("id")
 	err := Models.GetUserById(&user, id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, "User not found")
+		c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	fmt.Println(&user, "BEFORE")
 	c.BindJSON(&user)
-	fmt.Println(&user, "AFTER")
 	err = Models.UpdateUser(&user, id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, "Fail to update user")
+		c.JSON(http.StatusInternalServerError, err.Error())
 	} else {
-		c.JSON(http.StatusOK, user)
+		c.JSON(http.StatusOK, "User successfully updated")
 	}
 }
 
@@ -91,9 +88,10 @@ func DeleteUser(c *gin.Context) {
 	id := c.Params.ByName("id")
 	err := Models.DeleteUser(&user, id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, "Fail to update user")
+		c.JSON(http.StatusInternalServerError, err.Error())
 	} else {
-		c.JSON(http.StatusOK, gin.H{"id" + id: "is deleted"})
+		c.JSON(http.StatusOK, "User successfully deleted")
+		// c.JSON(http.StatusOK, gin.H{"id" + id: "is deleted"})
 	}
 }
 
