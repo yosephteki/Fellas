@@ -115,3 +115,14 @@ func GetUserIdeaJoin(c *gin.Context) {
 	}
 
 }
+
+func GetUserFriends(c *gin.Context) {
+	var friends []Models.User
+	userId := c.Params.ByName("userId")
+	err := Models.GetUserFriends(userId, &friends)
+	if err != nil {
+		c.AbortWithStatus(http.StatusNotFound)
+	} else {
+		c.JSON(http.StatusOK, friends)
+	}
+}

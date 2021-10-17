@@ -42,6 +42,7 @@ func SetupRouter() *gin.Engine {
 	//this syntax to add group to endpoints
 	grp1 := r.Group("/user-api")
 	{
+		grp1.GET("userFriends/:id", auth, Controllers.GetUserFriends)
 		grp1.GET("users", auth, Controllers.GetUsers)
 		grp1.GET("user/:id", auth, Controllers.GetUserById)
 		grp1.POST("user", auth, Controllers.CreateUser)

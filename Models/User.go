@@ -51,16 +51,13 @@ func CreateUser(user *User) (err error) {
 }
 
 func UpdateUser(user *User, id string) (err error) {
-	if err = Config.DB.Save(user).Error; err != nil {
-		return err
-	}
+	fmt.Println(user)
+	Config.DB.Save(user)
 	return nil
 }
 
 func DeleteUser(user *User, id string) (err error) {
-	if err = Config.DB.Where("id=?", id).Delete(user).Error; err != nil {
-		return err
-	}
+	Config.DB.Where("id=?", id).Delete(user)
 	return nil
 }
 
@@ -96,4 +93,12 @@ func GetUserIdeaJoin(id string) (ud []UserIdeaJoin, err error) {
 		userIdeaJoins = append(userIdeaJoins, userIdeaJoin)
 	}
 	return userIdeaJoins, nil
+}
+
+func GetUserFriends(id string, friends *[]User) (err error) {
+	fmt.Println(id + " < -=-------")
+	if err = Config.DB.Where("user_id=?", id).Find(&friends).Error; err != nil {
+		return err
+	}
+	return nil
 }
