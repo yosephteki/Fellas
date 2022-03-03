@@ -45,7 +45,7 @@ func SetupRouter() *gin.Engine {
 		grp1.GET("userFriends/:id", auth, Controllers.GetUserFriends)
 		grp1.GET("users", auth, Controllers.GetUsers)
 		grp1.GET("user/:id", auth, Controllers.GetUserById)
-		grp1.POST("user", auth, Controllers.CreateUser)
+		grp1.POST("user", Controllers.CreateUser)
 		grp1.PUT("user/:id", auth, Controllers.UpdateUser)
 		grp1.DELETE("user/:id", auth, Controllers.DeleteUser)
 		grp1.POST("userLogin", Controllers.Login)
