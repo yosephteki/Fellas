@@ -30,7 +30,8 @@ func Login(c *gin.Context) {
 		if err != nil {
 			c.AbortWithStatus(http.StatusNotFound)
 		}
-		c.JSON(http.StatusOK, token)
+		c.JSON(http.StatusOK, gin.H{"token": token, "user": user})
+		// c.JSON(http.StatusOK, gin.H{"id" + id: "is deleted"})
 	}
 
 }
